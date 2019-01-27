@@ -167,7 +167,7 @@ export class FlippableSprite extends PIXI.Sprite {
 }
 
 //basic lerp funtion.
-function lerp(a1:number,a2:number,t:number){
+export function lerp(a1:number,a2:number,t:number){
   return a1*(1-t) + a2*t;
 }
 

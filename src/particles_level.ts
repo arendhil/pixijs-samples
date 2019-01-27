@@ -1,11 +1,14 @@
 import * as PIXI from 'pixi.js';
 import * as TOOLS from './support';
 import {BaseApp} from './main';
+import * as PARTICLES from 'pixi-particles';
+
 
 export class ParticlesLevel implements TOOLS.GameLevel {
   level_name:string = "Particles";
   container: PIXI.Container;
   ticker: PIXI.ticker.Ticker;
+  emitter:PARTICLES.Emitter;
   constructor() {
     this.ticker = new PIXI.ticker.Ticker();
     this.ticker.autoStart = false;
@@ -33,16 +36,90 @@ export class ParticlesLevel implements TOOLS.GameLevel {
     main_menu_btn.setClickCallback(this.backToMenu);
     main_menu_btn.activate();
     this.container.addChild(menu_bg);
-    this.counter = this.time_to_create;
+
+    this.emitter = new PARTICLES.Emitter(this.container, PIXI.Texture.fromImage('fire_02.png'), {
+          "alpha": {
+            "start": 1,
+            "end": 0
+          },
+          "scale": {
+            "start": 0.4,
+            "end": 0.01,
+            "minimumScaleMultiplier": 2
+          },
+          "color": {
+            "start": "#f00919",
+            "end": "#e0a562"
+          },
+          "speed": {
+            "start": 25,
+            "end": 80,
+            "minimumSpeedMultiplier": 1
+          },
+          "acceleration": {
+            "x": 0,
+            "y": -500
+          },
+          "maxSpeed": 0,
+          "startRotation": {
+            "min": 0,
+            "max": 360
+          },
+          "noRotation": false,
+          "rotationSpeed": {
+            "min": 0,
+            "max": 0
+          },
+          "lifetime": {
+            "min": 0.2,
+            "max": 1.2
+          },
+          "blendMode": "normal",
+          "frequency": 0.001,
+          "emitterLifetime": -1,
+          "maxParticles": 500,
+          "pos": {
+            "x": 0,
+            "y": 0
+          },
+          "addAtBack": false,
+          "spawnType": "circle",
+          "spawnCircle": {
+            "x": 0,
+            "y": 0,
+            "r": 12
+          }
+        });
+    this.emitter.spawnPos.x = BaseApp.instance.renderer.width/2;
+    this.emitter.spawnPos.y = BaseApp.instance.renderer.height/2;
+    this.emitter.autoUpdate = true;
+    this.emitter.emit = true;
+    this.container.on('touchmove', this.onMove);
+    this.container.on('pointermove', this.onMove);
+    this.container.on('mousemove', this.onMove);
   }
   backToMenu() {
       BaseApp.instance.changeLevel("MainMenu");
   }
   destroyLevel() {
     this.container.destroy({children:true});
+    this.emitter.destroy();
     this.ticker.stop();
   }
-  onTick = (delta:number) {
-    
+  onMove = (e:PIXI.interaction.InteractionEvent) => {
+
+  }
+  onTick = (delta:number) =>{
+    //this.emitter.update(this.ticker.deltaTime);
+    var mouseposition = BaseApp.instance.renderer.plugins.interaction.mouse.global;
+    if ((mouseposition.x < 300) || (mouseposition.x > BaseApp.instance.renderer.width-200) ||
+        (mouseposition.y < 100) || (mouseposition.y > BaseApp.instance.renderer.height-100)) {
+      this.emitter.spawnPos.x = BaseApp.instance.renderer.width/2;
+      this.emitter.spawnPos.y = BaseApp.instance.renderer.height/2;
+
+    } else {
+      this.emitter.spawnPos.x = mouseposition.x;
+      this.emitter.spawnPos.y = mouseposition.y;
+    }
   }
 }

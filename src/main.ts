@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js';
 import * as HUB from './support';
 import {CardsLevel, FastCardsLevel} from './cards_levels';
 import {TextImageLevel} from './text_image_level';
+import {ParticlesLevel} from './particles_level';
 import {MainMenu} from './main_menu';
 
 export class BaseApp extends PIXI.Application {
@@ -27,7 +28,7 @@ export class BaseApp extends PIXI.Application {
       this.available_levels = []
       var hub = new MainMenu();
       this.available_levels.push(hub);
-      for (var level of [new CardsLevel(), new FastCardsLevel(), new TextImageLevel()]) {
+      for (var level of [new CardsLevel(), new FastCardsLevel(), new TextImageLevel(), new ParticlesLevel()]) {
         this.available_levels.push(level);
 
       }

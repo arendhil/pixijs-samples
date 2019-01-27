@@ -9,6 +9,7 @@
   },
   "devDependencies": {
     "brfs": "^2.0.1",
+    "pixi-particles": "^3.1.0",
     "source-map-loader": "^0.2.4",
     "transform-loader": "^0.2.4",
     "ts-loader": "^5.3.3",

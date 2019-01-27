@@ -55,7 +55,7 @@ export class MainMenu implements GameLevel {
         fill : 0xFFFFFF,
         align: 'right'
     }
-    var text = new PIXI.Text("Game Development Test\nMarcelo F. Rigon\nUsing: Pixi.JS, Typescript, webpack and NPM\nAssets: kenney.nl", style);
+    var text = new PIXI.Text("Using: Pixi.JS, Typescript, webpack and NPM\nGame Development Test\nMarcelo F. Rigon\nAssets: kenney.nl", style);
     text.x = BaseApp.instance.renderer.width/2 + text.width - this.container.x;
     text.y = 0;
     this.container.addChild(text);
