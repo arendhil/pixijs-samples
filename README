@@ -1,0 +1,10 @@
+##INSTALL
+
+npm install
+
+## BUILD
+webpack 
+
+## Up
+node server.js
+
