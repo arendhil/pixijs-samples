@@ -12,6 +12,6 @@ app.use('/externals', express.static(__dirname + '/externals'));
 app.use('/', express.static(__dirname + '/public'));
 //add the router
 app.use('/', router);
-app.listen(process.env.port || 3000, '0.0.0.0');
+app.listen(process.env.port || 3000);
 
 console.log('Running at Port: '+(process.env.PORT || 3000));
