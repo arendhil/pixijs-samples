@@ -94,9 +94,6 @@ export class ParticlesLevel implements TOOLS.GameLevel {
     this.emitter.spawnPos.y = BaseApp.instance.renderer.height/2;
     this.emitter.autoUpdate = true;
     this.emitter.emit = true;
-    this.container.on('touchmove', this.onMove);
-    this.container.on('pointermove', this.onMove);
-    this.container.on('mousemove', this.onMove);
   }
   backToMenu() {
       BaseApp.instance.changeLevel("MainMenu");
@@ -106,20 +103,22 @@ export class ParticlesLevel implements TOOLS.GameLevel {
     this.emitter.destroy();
     this.ticker.stop();
   }
-  onMove = (e:PIXI.interaction.InteractionEvent) => {
-
-  }
-  onTick = (delta:number) =>{
-    //this.emitter.update(this.ticker.deltaTime);
-    var mouseposition = BaseApp.instance.renderer.plugins.interaction.mouse.global;
-    if ((mouseposition.x < 300) || (mouseposition.x > BaseApp.instance.renderer.width-200) ||
-        (mouseposition.y < 100) || (mouseposition.y > BaseApp.instance.renderer.height-100)) {
+  updateEmitter(px:number, py:number) {
+    if ((px < 300) || (px > BaseApp.instance.renderer.width-200) ||
+        (py < 100) || (py > BaseApp.instance.renderer.height-100)) {
       this.emitter.spawnPos.x = BaseApp.instance.renderer.width/2;
       this.emitter.spawnPos.y = BaseApp.instance.renderer.height/2;
 
     } else {
-      this.emitter.spawnPos.x = mouseposition.x;
-      this.emitter.spawnPos.y = mouseposition.y;
+      this.emitter.spawnPos.x = px;
+      this.emitter.spawnPos.y = py;
     }
+  }
+  onTick = (delta:number) =>{
+    //this.emitter.update(this.ticker.deltaTime);
+    var mousePos = BaseApp.instance.renderer.plugins.interaction.mouse.global;
+    var px = mousePos.x;
+    var py = mousePos.y;
+    this.updateEmitter(px,py);
   }
 }

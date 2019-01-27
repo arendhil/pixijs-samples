@@ -7,7 +7,7 @@ export class TextImageLevel implements TOOLS.GameLevel {
   container: PIXI.Container;
   ticker: PIXI.ticker.Ticker;
   images_name_array: string[];
-  time_to_create:number = 500;
+  time_to_create:number = 2000;
   private counter:number = 0;
   max_font_size:number = 30;
   min_font_size:number = 12;
