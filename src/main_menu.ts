@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
 import {SimpleButton, FlippableSprite, GameLevel} from './support';
 import {BaseApp} from './main';
+import {Bee} from './bee';
 
 export class MainMenu implements GameLevel {
   level_name:string = "MainMenu";
@@ -88,6 +89,8 @@ export class MainMenu implements GameLevel {
     text.x = this.coin.x - text.width/2;
     text.y = this.coin.y +30;
     this.container.addChild(text);
+
+    this.container.addChild(new Bee(new PIXI.Point(400,500), new PIXI.Point(800,50), 5000.0));
   }
   createLevel():void {
     for (var button of this.buttons) {
